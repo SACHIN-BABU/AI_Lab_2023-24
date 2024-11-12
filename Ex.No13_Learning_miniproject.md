@@ -18,7 +18,7 @@ Algorithm: Fish Health Prediction Using Logistic Regression
 10.Stop the Program
 
 ### Program:
-'''
+```
 
 import numpy as np
 import pandas as pd
@@ -129,7 +129,7 @@ print(f"Accuracy: {accuracy * 100:.2f}%")
 print("Confusion Matrix:")
 print(conf_matrix)
 
-'''
+```
 
 
 ### Output:
