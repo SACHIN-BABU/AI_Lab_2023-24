@@ -1,5 +1,5 @@
 # Ex.No: 13 Learning – Use Supervised Learning  
-### DATE: 24.10.24                                                                           
+### DATE: 24.10.24                                                                          
 ### REGISTER NUMBER : 212222060207
 ### AIM: 
 To write a program to train a Logistic Regression classifier for identifying fish health conditions based on observed symptoms and water quality parameters.
