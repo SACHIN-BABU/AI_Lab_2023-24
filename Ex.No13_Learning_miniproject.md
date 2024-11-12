@@ -27,7 +27,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, confusion_matrix
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-# Expanded dataset for better accuracy
+
 data = {
     'symptoms': [
         "Fish not eating and slow", 
@@ -53,30 +53,30 @@ data = {
     'salinity': [30, 28, 35, 40, 32, 29, 31, 38, 34, 36, 33, 29, 31, 37, 36, 32]        # Sample salinity data
 }
 
-# Create DataFrame
+#Create DataFrame
 df = pd.DataFrame(data)
 
-# Display class distribution to check for imbalance
+#Display class distribution to check for imbalance
 print("Class distribution in 'disease':", np.bincount(df['disease']))
 
-# Convert the text data into TF-IDF features
+#Convert the text data into TF-IDF features
 tfidf = TfidfVectorizer()
 df_tfidf = tfidf.fit_transform(df['symptoms'])
 
-# Combine TF-IDF features with water condition features (temperature, pH, salinity)
+#Combine TF-IDF features with water condition features (temperature, pH, salinity)
 X = np.hstack([df_tfidf.toarray(), df[['temperature', 'pH', 'salinity']].values])
 
-# Target variable
+#Target variable
 y = df['disease']
 
-# Split the dataset into training and testing sets, using stratify to keep class balance
+#Split the dataset into training and testing sets, using stratify to keep class balance
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42, stratify=y)
 
-# Initialize and train the Logistic Regression model
+#Initialize and train the Logistic Regression model
 model = LogisticRegression(max_iter=200)  # Increase the number of iterations
 model.fit(X_train, y_train)
 
-# Medication suggestions with specific antibiotics and treatments
+#Medication suggestions with specific antibiotics and treatments
 medication_dict = {
     "Fish not eating and slow": "Treat with *Metronidazole* to address potential parasites; ensure good water quality.",
     "Fish has white spots": "Use *Copper-based treatments* (e.g., Cupramine) to treat Ich (white spot disease).",
@@ -91,7 +91,7 @@ medication_dict = {
     "Fish is darting around": "May indicate stress or parasites; check water quality and use *Anti-parasitics*."
 }
 
-# Function to predict disease based on user input
+#Function to predict disease based on user input
 def predict_disease(user_input, temperature, pH, salinity):
     # Preprocess user input
     user_input_tfidf = tfidf.transform([user_input]).toarray()
@@ -108,23 +108,23 @@ def predict_disease(user_input, temperature, pH, salinity):
     # Return prediction result and medication suggestion
     return "Diseased" if prediction[0] == 1 else "Healthy", medication_suggestion
 
-# Example usage with user input
+#Example usage with user input
 user_input = "Fish has cloudy eyes"  # Input indicating disease
 temperature = 29                      # Example temperature
 pH = 6.9                              # Example pH level
 salinity = 33                         # Example salinity level
 result, medication = predict_disease(user_input, temperature, pH, salinity)
 
-# Output the prediction and medication suggestion
+#Output the prediction and medication suggestion
 print(f"Prediction for input '{user_input}': {result}")
 print(f"Suggested Medication: {medication}")
 
-# Evaluate the model’s performance
+#Evaluate the model’s performance
 y_pred = model.predict(X_test)
 accuracy = accuracy_score(y_test, y_pred)
 conf_matrix = confusion_matrix(y_test, y_pred)
 
-# Display the accuracy and confusion matrix
+#Display the accuracy and confusion matrix
 print(f"Accuracy: {accuracy * 100:.2f}%")
 print("Confusion Matrix:")
 print(conf_matrix)
